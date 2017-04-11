@@ -4,7 +4,10 @@
 
 <% if game.done? %>
   <h3>All done!</h3>
-  <h4>Hopefully you were talking about <%= Person.find_by(id: game.possible_ids.first).name %>?</h4>
+  <h4>Hopefully you were talking about <%= game.winner.name %>?</h4>
+  <div>
+    <%= image_tag "#{game.winner.slug}.jpg", class: "profile-pic" %>
+  </div>
 <% else %>
   <h3>Current Question:</h3>
   <% question = game.current_question %>
@@ -18,11 +21,11 @@
   </div>
 
   <h3>Possible Choices</h3>
-  <ul>
-    <% Person.where(id: game.possible_ids).each do |person| %>
-      <li>
-        <%= person.name %>
-      </li>
-    <% end %>
-  </ul>
+
+  <% Person.where(id: game.possible_ids).each do |person| %>
+    <div>
+      <%= image_tag "#{person.slug}.jpg", class: "profile-pic" %>
+    </div>
+  <% end %>
+
 <% end %>

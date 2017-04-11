@@ -7,6 +7,14 @@ class Game < ApplicationRecord
 
   validates :current_question, presence: true, unless: :done?
 
+  def winner
+    Person.find_by(id: possible_ids.first)
+  end
+
+  def possible_people
+    Person.where(id: possible_ids)
+  end
+
   def set_possible_ids
     self.possible_ids = Person.pluck(:id)
   end

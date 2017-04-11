@@ -1,0 +1,28 @@
+<%= link_to "Home", root_url %>
+
+<h1>Game <%= game.id %></h1>
+
+<% if game.done? %>
+  <h3>All done!</h3>
+  <h4>Hopefully you were talking about <%= Person.find_by(id: game.possible_ids.first).name %>?</h4>
+<% else %>
+  <h3>Current Question:</h3>
+  <% question = game.current_question %>
+  <div>
+    <%= question.title %>
+  </div>
+  <div>
+    <% question.answers.each do |answer| %>
+      <%= button_to answer.title, choose_path(game, answer: answer.id) %>
+    <% end %>
+  </div>
+
+  <h3>Possible Choices</h3>
+  <ul>
+    <% Person.where(id: game.possible_ids).each do |person| %>
+      <li>
+        <%= person.name %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

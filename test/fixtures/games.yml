@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  possible_ids: 1
+  asked_question_ids: 1
+
+two:
+  possible_ids: 1
+  asked_question_ids: 1

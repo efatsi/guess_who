@@ -1,0 +1,11 @@
+<h1>Guess Who!</h1>
+
+<ul>
+  <% Game.all.each do |game| %>
+    <li>
+      <%= link_to "Game #{game.id}", game %>
+    </li>
+  <% end %>
+</ul>
+
+<%= button_to "New Game", games_path %>

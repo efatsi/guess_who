@@ -8,11 +8,15 @@ class GamesController < ApplicationController
   def create
     game = Game.create
 
+    Pusher.trigger("game", "update", game.reload.as_json)
+
     redirect_to game
   end
 
   def choose
     AnswerHandler.new(game, params[:answer]).process
+
+    Pusher.trigger("game", "update", game.reload.as_json)
 
     redirect_to game
   end

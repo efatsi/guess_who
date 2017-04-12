@@ -20,12 +20,5 @@
     <% end %>
   </div>
 
-  <h3>Possible Choices</h3>
-
-  <% Person.where(id: game.possible_ids).each do |person| %>
-    <div>
-      <%= image_tag "#{person.slug}.jpg", class: "profile-pic" %>
-    </div>
-  <% end %>
 
 <% end %>

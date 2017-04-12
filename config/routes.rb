@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :create]
   post "/games/:id/choose", to: "games#choose", as: :choose
+
+  get "/info", to: "api#index"
 end

@@ -7,6 +7,14 @@ class Game < ApplicationRecord
 
   validates :current_question, presence: true, unless: :done?
 
+  def as_json(opts = {})
+    {
+      answers: current_question ? current_question.answers.as_json : [],
+      done:    done,
+      people:  PeopleJson.new(self).as_json
+    }
+  end
+
   def winner
     Person.find_by(id: possible_ids.first)
   end

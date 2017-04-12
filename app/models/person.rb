@@ -6,14 +6,17 @@ class Person < ApplicationRecord
 
   validates :name, presence: true
 
+  scope :by_name, -> { order(:name) }
+
   def slug
     name.parameterize.underscore
   end
 
   def as_json(opts = {})
     {
-      id:  id,
-      url: image_url("#{slug}.jpg")
+      id:   id,
+      slug: slug,
+      url:  "http://localhost:3000" + image_url("#{slug}.jpg")
     }
   end
 end

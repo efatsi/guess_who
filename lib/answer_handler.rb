@@ -2,10 +2,10 @@ class AnswerHandler
 
   attr_reader :game, :current_question, :answer
 
-  def initialize(game, answer_id)
+  def initialize(game, answer)
     @game             = game
     @current_question = @game.current_question
-    @answer           = @current_question.answers.find(answer_id)
+    @answer           = answer
   end
 
   def process

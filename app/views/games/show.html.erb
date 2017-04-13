@@ -4,7 +4,7 @@
 
 <% if game.done? %>
   <h3>All done!</h3>
-  <h4>Hopefully you were talking about <%= game.winner.name %>?</h4>
+  <h4>Hopefully you were talking about <%= game.winner %>?</h4>
   <div>
     <%= image_tag "#{game.winner.slug}.jpg", class: "profile-pic" %>
   </div>

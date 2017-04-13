@@ -5,12 +5,11 @@ class Game < ApplicationRecord
   before_validation :set_first_question, on: :create
   before_validation :check_for_done
 
-  validates :current_question, presence: true, unless: :done?
-
   def as_json(opts = {})
     {
       answers: current_question ? current_question.answers.as_json : [],
       done:    done,
+      waiting: false,
       people:  PeopleJson.new(self).as_json
     }
   end
@@ -28,7 +27,7 @@ class Game < ApplicationRecord
   end
 
   def set_first_question
-    self.current_question = QuestionPicker.new(self).new_question
+    self.current_question = QuestionPicker.new(self).first_question
   end
 
   def check_for_done

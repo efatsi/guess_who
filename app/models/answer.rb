@@ -6,6 +6,10 @@ class Answer < ApplicationRecord
 
   validates :title, :question, presence: true
 
+  def to_s
+    title
+  end
+
   def as_json(opts = {})
     {
       id:    id,

@@ -8,6 +8,10 @@ class Person < ApplicationRecord
 
   scope :by_name, -> { order(:name) }
 
+  def to_s
+    name
+  end
+
   def slug
     name.parameterize.underscore
   end

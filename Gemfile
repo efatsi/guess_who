@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'awesome_print'
 gem 'pusher'
+gem 'alexa_rubykit'
 
 group :development, :test do
   gem 'pry-rails'

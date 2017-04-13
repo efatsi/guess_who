@@ -6,6 +6,10 @@ class QuestionPicker
     @game = game
   end
 
+  def first_question
+    Question.first
+  end
+
   def new_question
     Question.where.not(id: game.asked_question_ids).sample
   end

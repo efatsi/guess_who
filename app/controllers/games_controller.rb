@@ -14,7 +14,8 @@ class GamesController < ApplicationController
   end
 
   def choose
-    answer = game.current_question.answers.find(params[:answer])
+    answer = game.current_question.answers.find_by(id: params[:answer])
+
     AnswerHandler.new(game, answer).process
     Pusher.trigger("game", "update", game.reload.as_json)
 

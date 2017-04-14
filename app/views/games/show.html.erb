@@ -10,15 +10,21 @@
   </div>
 <% else %>
   <h3>Current Question:</h3>
-  <% question = game.current_question %>
-  <div>
-    <%= question.title %>
-  </div>
-  <div>
-    <% question.answers.each do |answer| %>
-      <%= button_to answer.title, choose_path(game, answer: answer.id) %>
-    <% end %>
-  </div>
+  <% if question = game.current_question %>
+    <div>
+      <%= question.title %>
+    </div>
+    <div>
+      <% question.answers.each do |answer| %>
+        <%= button_to answer.title, choose_path(game, answer: answer.id) %>
+        (<%= answer.people.where(id: game.possible_ids).count %>)
+      <% end %>
+
+      <%= button_to "idk", choose_path(game, answer: nil) %>
+    </div>
+  <% else %>
+    <div>Looks like you're not talking about anyone :(</div>
+  <% end %>
 
 
 <% end %>

@@ -73,5 +73,5 @@ question = Question.where(
   answer = question.answers.where(title: value).first_or_create
   person = Person.find_by(name: name)
 
-  answer.people << person
+  answer.people << person unless answer.people.include?(person)
 end

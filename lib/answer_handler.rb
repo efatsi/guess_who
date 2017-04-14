@@ -9,7 +9,10 @@ class AnswerHandler
   end
 
   def process
-    game.possible_ids       =  new_possible_ids
+    if answer.present?
+      game.possible_ids       =  new_possible_ids
+    end
+
     game.asked_question_ids << current_question.id
     game.current_question   =  question_picker.new_question
 

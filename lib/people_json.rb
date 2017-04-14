@@ -22,7 +22,7 @@ class PeopleJson
 
       {
         id:      person.id,
-        url:     "http://localhost:3000/images/#{person.slug}.jpg",
+        url:     "https://guess-whoo.herokuapp.com/images/#{person.slug}.jpg",
         visible: visible,
         left:    left_for(index),
         top:     top_for(index)
@@ -31,11 +31,15 @@ class PeopleJson
   end
 
   def left_for(index)
+    return 0 if visible_count == 0
+
     column_index = index % columns
     left_bound + (column_index * width_gap)
   end
 
   def top_for(index)
+    return 0 if visible_count == 0
+
     # TODO: do something if last row
     # if row_index == (rows - 1) ...
 

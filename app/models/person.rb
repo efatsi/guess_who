@@ -20,7 +20,7 @@ class Person < ApplicationRecord
     {
       id:   id,
       slug: slug,
-      url:  "http://localhost:3000" + image_url("#{slug}.jpg")
+      url:  "https://guess-whoo.herokuapp.com" + image_url("#{slug}.jpg")
     }
   end
 end

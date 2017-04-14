@@ -10,7 +10,7 @@ class AnswerHandler
 
   def process
     if answer.present?
-      game.possible_ids       =  new_possible_ids
+      game.possible_ids =  new_possible_ids
     end
 
     game.asked_question_ids << current_question.id

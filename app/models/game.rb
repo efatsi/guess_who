@@ -5,6 +5,10 @@ class Game < ApplicationRecord
   before_validation :set_first_question, on: :create
   before_validation :check_for_done
 
+  def self.wait
+    Pusher.trigger("game", "wait", {})
+  end
+
   def as_json(opts = {})
     {
       answers: current_question ? current_question.answers.as_json : [],

@@ -13,7 +13,7 @@ class AlexaResponse
   end
 
   def process
-    handle_answer
+    handle_incoming
     push_update
     build_response
   rescue InvalidAnswer => e
@@ -25,11 +25,22 @@ class AlexaResponse
 
   private
 
-  def handle_answer
+  def handle_incoming
     return if new_session?
 
+    skipping? ? handle_skip : handle_answer
+  end
+
+  def handle_skip
+    AnswerHandler.new(game, nil).process
+  end
+
+  def push_update
+    Pusher.trigger("game", "update", game.reload.as_json)
+  end
+
+  def handle_answer
     question = game.current_question
-    incoming = AnswerParser.new(params).parsed
     answer   = question.answers.find_by(title: incoming)
 
     if answer.present?
@@ -40,21 +51,29 @@ class AlexaResponse
     end
   end
 
-  def push_update
-    Pusher.trigger("game", "update", game.reload.as_json)
-  end
-
   def build_response
     if game.reload.done
       response.add_speech("Well, looks like it's #{game.winner}")
     else
       next_question = game.current_question
+
       if new_session?
         response.add_speech("Here we go! #{next_question}")
+      elsif skipping?
+        response.add_speech("No problem, that was a dumb question anyway. #{next_question}")
       else
         response.add_speech("Great! #{next_question}")
       end
     end
+  end
+
+  def skipping?
+    @skipping ||= params["request"]["intent"]["name"] == "Skip"
+  end
+
+  def incoming
+    @incoming ||= AnswerParser.new(params).parsed
+  rescue
   end
 
   def response

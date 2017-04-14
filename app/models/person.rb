@@ -8,6 +8,14 @@ class Person < ApplicationRecord
 
   scope :by_name, -> { order(:name) }
 
+  def self.picture_json
+    all.map do |person|
+      {
+        url: person.url
+      }
+    end
+  end
+
   def to_s
     name
   end
@@ -20,7 +28,11 @@ class Person < ApplicationRecord
     {
       id:   id,
       slug: slug,
-      url:  "https://guess-whoo.herokuapp.com" + image_url("#{slug}.jpg")
+      url:  url
     }
+  end
+
+  def url
+    "https://guess-whoo.herokuapp.com" + image_url("#{slug}.jpg")
   end
 end

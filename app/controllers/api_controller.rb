@@ -5,6 +5,10 @@ class ApiController < ApplicationController
     render json: game.as_json
   end
 
+  def pics
+    render json: Person.picture_json
+  end
+
   private
 
   def game

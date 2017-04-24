@@ -71,7 +71,7 @@ class AlexaResponse
 
   def add_speech(words)
     response.add_speech(words)
-    response.add_remprompt(words)
+    response.add_reprompt(words)
   end
 
   def skipping?

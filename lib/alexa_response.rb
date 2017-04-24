@@ -17,7 +17,9 @@ class AlexaResponse
     push_update
     build_response
   rescue InvalidAnswer => e
-    response.add_speech(e.message)
+    add_speech(e.message)
+  rescue => e
+    add_speech("Sorry, I couldn't understand what you said., #{game.current_question}")
   ensure
     response.add_session_attribute("game_id", game.id)
     response.build_session
@@ -53,22 +55,29 @@ class AlexaResponse
 
   def build_response
     if game.reload.done
-      response.add_speech("Well, looks like it's #{game.winner}")
+      add_speech("Well, looks like it's #{game.winner}")
     else
       next_question = game.current_question
 
       if new_session?
-        response.add_speech("Here we go! #{next_question}")
+        add_speech("Here we go! #{next_question}")
       elsif skipping?
-        response.add_speech("No problem, that was a dumb question anyway. #{next_question}")
+        add_speech("No problem, that was a dumb question anyway. #{next_question}")
       else
-        response.add_speech("Great! #{next_question}")
+        add_speech("Great! #{next_question}")
       end
     end
   end
 
+  def add_speech(words)
+    response.add_speech(words)
+    response.add_remprompt(words)
+  end
+
   def skipping?
     @skipping ||= params["request"]["intent"]["name"] == "Skip"
+  rescue
+    false
   end
 
   def incoming

@@ -1,66 +1,77 @@
-"Does this person work in the HQ office?"
+puts "Seeding HQ question"
 
-"Albert Wavering"   "no"
-"Ally Fouts"        "yes"
-"Amanda Ruehlen"    "yes"
-"Andy Rankin"       "yes"
-"Annie Kiley"       "no"
-"Becca James"       "yes"
-"Becky Tornes"      "no"
-"Ben Tinsley"       "no"
-"Ben Eckerson"      "no"
-"Ben Travis"        "yes"
-"Billy French"      "no"
-"Blair Culbreth"    "no"
-"Brandon Dorn"      "yes"
-"Brian Williams"    "yes"
-"Chris Manning"     "no"
-"Chris Jones"       "no"
-"Cindy Caldwell"    "yes"
-"Claire Atwell"     "no"
-"Curt Arledge"      "no"
-"Dan Tello"         "yes"
-"David Eisinger"    "no"
-"Elias Fatsi"       "no"
-"Elliott Muñoz"     "yes"
-"Emily Bloom"       "no"
-"Grace Canfield"    "yes"
-"Greg Kohn"         "yes"
-"Heather Muety"     "yes"
-"Henry Bley-Vroman" "no"
-"Ian Brennan"       "no"
-"Jackson Fox"       "no"
-"Jason Toth"        "no"
-"Jeremy Frank"      "no"
-"Jeremy Fields"     "no"
-"Josh Korr"         "yes"
-"Justin Sinichko"   "no"
-"Kaitlyn Irvine"    "no"
-"Katherine Olvera"  "yes"
-"Kelly Kenny"       "no"
-"Kevin Vigneault"   "yes"
-"Kevin Powers"      "yes"
-"Khanh Stenberg"    "yes"
-"Laura Sweltz"      "no"
-"Leo Bauza"         "yes"
-"Megan Zlock"       "yes"
-"Mike Ackerman"     "no"
-"Mindy Wagner"      "no"
-"Minh Tran"         "yes"
-"Mitch Daniels"     "yes"
-"Natalie Reich"     "yes"
-"Nate Hunzaker"     "no"
-"Owen Shifflett"    "yes"
-"Patrick Reagan"    "no"
-"Pascale Georges"   "no"
-"Paul Koch"         "no"
-"Peyton Crump"      "no"
-"Ryan Stenberg"     "yes"
-"Samantha Freda"    "yes"
-"Samara Strauss"    "yes"
-"Sarah Schraer"     "yes"
-"Solomon Hawk"      "no"
-"Tom Osborne"       "yes"
-"Trevor Davis"      "no"
-"Zach Robbins"      "yes"
-"Zachary Porter"    "no"
+question = Question.where(
+  title: "Does this person work in the HQ office?"
+).first_or_create
+
+{
+  "Albert Wavering"   => "no",
+  "Ally Fouts"        => "yes",
+  "Amanda Ruehlen"    => "yes",
+  "Andy Rankin"       => "yes",
+  "Annie Kiley"       => "no",
+  "Becca James"       => "yes",
+  "Becky Tornes"      => "no",
+  "Ben Tinsley"       => "no",
+  "Ben Eckerson"      => "no",
+  "Ben Travis"        => "yes",
+  "Billy French"      => "no",
+  "Blair Culbreth"    => "no",
+  "Brandon Dorn"      => "yes",
+  "Brian Williams"    => "yes",
+  "Chris Manning"     => "no",
+  "Chris Jones"       => "no",
+  "Cindy Caldwell"    => "yes",
+  "Claire Atwell"     => "no",
+  "Curt Arledge"      => "no",
+  "Dan Tello"         => "yes",
+  "David Eisinger"    => "no",
+  "Elias Fatsi"       => "no",
+  "Elliott Muñoz"     => "yes",
+  "Emily Bloom"       => "no",
+  "Grace Canfield"    => "yes",
+  "Greg Kohn"         => "yes",
+  "Heather Muety"     => "yes",
+  "Henry Bley-Vroman" => "no",
+  "Ian Brennan"       => "no",
+  "Jackson Fox"       => "no",
+  "Jason Toth"        => "no",
+  "Jeremy Frank"      => "no",
+  "Jeremy Fields"     => "no",
+  "Josh Korr"         => "yes",
+  "Justin Sinichko"   => "no",
+  "Kaitlyn Irvine"    => "no",
+  "Katherine Olvera"  => "yes",
+  "Kelly Kenny"       => "no",
+  "Kevin Vigneault"   => "yes",
+  "Kevin Powers"      => "yes",
+  "Khanh Stenberg"    => "yes",
+  "Laura Sweltz"      => "no",
+  "Leo Bauza"         => "yes",
+  "Megan Zlock"       => "yes",
+  "Mike Ackerman"     => "no",
+  "Mindy Wagner"      => "no",
+  "Minh Tran"         => "yes",
+  "Mitch Daniels"     => "yes",
+  "Natalie Reich"     => "yes",
+  "Nate Hunzaker"     => "no",
+  "Owen Shifflett"    => "yes",
+  "Patrick Reagan"    => "no",
+  "Pascale Georges"   => "no",
+  "Paul Koch"         => "no",
+  "Peyton Crump"      => "no",
+  "Ryan Stenberg"     => "yes",
+  "Samantha Freda"    => "yes",
+  "Samara Strauss"    => "yes",
+  "Sarah Schraer"     => "yes",
+  "Solomon Hawk"      => "no",
+  "Tom Osborne"       => "yes",
+  "Trevor Davis"      => "no",
+  "Zach Robbins"      => "yes",
+  "Zachary Porter"    => "no",
+}.each do |name, value|
+  answer = question.answers.where(title: value).first_or_create
+  person = Person.find_by(name: name)
+
+  answer.people << person unless answer.people.include?(person)
+end

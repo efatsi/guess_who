@@ -7,7 +7,7 @@ class QuestionPicker
   end
 
   def first_question
-    Question.all.select do |question|
+    Question.non_specific.all.select do |question|
       question.answers.all? do |answer|
         answer.people.count > 20
       end

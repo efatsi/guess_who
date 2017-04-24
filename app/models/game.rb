@@ -18,6 +18,10 @@ class Game < ApplicationRecord
     }
   end
 
+  def is_done?
+    done? || current_question.nil?
+  end
+
   def winner
     Person.find_by(id: possible_ids.first)
   end

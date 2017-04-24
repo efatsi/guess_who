@@ -10,7 +10,7 @@ class AlexaResponse
   end
 
   def as_json(opts = {})
-    response.build_response(session_end = game.done)
+    response.build_response(session_end = game.is_done?)
   end
 
   def process
@@ -50,7 +50,6 @@ class AlexaResponse
     if answer.present?
       AnswerHandler.new(game, answer).process
     else
-      # Todo: switch off of `incoming` to fine tune message
       raise InvalidAnswer.new("I couldn't make out what you said, #{question}")
     end
   end
@@ -80,36 +79,44 @@ class AlexaResponse
     else
       next_question = game.current_question
 
-      if new_session?
-        add_speech("Here we go! #{next_question}")
-      elsif skipping?
-        add_speech("No problem, that was a dumb question anyway. #{next_question}")
-      else
-        if last_question.specific?
-          specific_person = last_question.answers.find_by(title: "yes").people.first
-
+      if next_question.present?
+        if new_session?
+          add_speech("Here we go! #{next_question}")
+        elsif skipping?
           add_speech [
-            "Honestly, I knew it wasn't #{specific_person}, I just wanted to ask you that question. #{next_question}",
-            "Okay, at least we can rule out #{specific_person}. #{next_question}",
-            "So it's not #{specific_person} - got it. Okay. #{next_question}",
-            "Awww. I was hoping it was #{specific_person}. Let's see if you picked someone better. #{next_question}",
-            "Well we can eliminate #{specific_person} then. #{next_question}",
+            "No problem, that was a dumb question anyway. #{next_question}",
+            "No problem. #{next_question}",
+            "We'll just skip that one then. #{next_question}",
           ].sample
         else
-          if (rand < 0.05)
-            add_speech "Hot, diggity, damn! #{next_question}"
-          else
+          if last_question.specific?
+            specific_person = last_question.answers.find_by(title: "yes").people.first
+
             add_speech [
-              "Great! #{next_question}",
-              "Sounds good! #{next_question}",
-              "Interesting! #{next_question}",
-              "Well then, #{next_question}",
-              "Okay then, #{next_question}",
-              "That cuts a few people out, #{next_question}",
-              "Wonderful! #{next_question}",
+              "Honestly, I knew it wasn't #{specific_person}, I just wanted to ask you that question. #{next_question}",
+              "Okay, at least we can rule out #{specific_person}. #{next_question}",
+              "So it's not #{specific_person} - got it. Okay. #{next_question}",
+              "Awww. I was hoping it was #{specific_person}. Let's see if you picked someone better. #{next_question}",
+              "Well we can eliminate #{specific_person} then. #{next_question}",
             ].sample
+          else
+            if (rand < 0.05)
+              add_speech "Hot, diggity, damn! #{next_question}"
+            else
+              add_speech [
+                "Great! #{next_question}",
+                "Sounds good! #{next_question}",
+                "Interesting! #{next_question}",
+                "Well then, #{next_question}",
+                "Okay then, #{next_question}",
+                "That cuts a few people out, #{next_question}",
+                "Wonderful! #{next_question}",
+              ].sample
+            end
           end
         end
+      else
+        add_speech "Well I'm out of ideas, you should get to know your coworkers better!"
       end
     end
   end

@@ -15,16 +15,18 @@ class QuestionPicker
   end
 
   def new_question
-    Question.where.not(id: game.asked_question_ids).select do |question|
-      count = 0
+    if game.possible_ids.count <= 3
+      specific_question || non_specific_question
+    else
+      non_specific_question || specific_question
+    end
+  end
 
-      question.answers.each do |answer|
-        if answer.people.where(id: game.possible_ids).any?
-          count += 1
-        end
-      end
+  def specific_question
+    Question.specific.for_game(game)
+  end
 
-      count >= 2
-    end.sample
+  def non_specific_question
+    Question.non_specific.for_game(game)
   end
 end

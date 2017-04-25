@@ -101,7 +101,7 @@ class AlexaResponse
             ].sample
           else
             if (rand < 0.05)
-              add_speech "Hot, diggity, damn! #{next_question}"
+              add_speech "Hot. diggidy ... dayumn! #{next_question}"
             else
               add_speech [
                 "Great! #{next_question}",

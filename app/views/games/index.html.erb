@@ -1,7 +1,7 @@
 <h1>Guess Who!</h1>
 
 <ul>
-  <% Game.all.each do |game| %>
+  <% Game.order(:id).all.each do |game| %>
     <li>
       <%= link_to "Game #{game.id}", game %>
     </li>

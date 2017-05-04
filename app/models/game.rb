@@ -12,8 +12,18 @@ class Game < ApplicationRecord
   def as_json(opts = {})
     {
       people: PeopleJson.new(self).as_json,
-      status: done ? "done" : "playing"
+      status: status
     }
+  end
+
+  def status
+    if updated_at < 1.minute.ago
+      "waiting"
+    elsif done?
+      "done"
+    else
+      "playing"
+    end
   end
 
   def is_done?

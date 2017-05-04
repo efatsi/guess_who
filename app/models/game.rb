@@ -6,15 +6,13 @@ class Game < ApplicationRecord
   before_validation :check_for_done
 
   def self.wait
-    Pusher.trigger("game", "wait", {})
+    Pusher.trigger(PUSHER_GROUP, "wait", {})
   end
 
   def as_json(opts = {})
     {
-      answers: current_question ? current_question.answers.as_json : [],
-      done:    done,
-      waiting: false,
-      people:  PeopleJson.new(self).as_json
+      people: PeopleJson.new(self).as_json,
+      status: done ? "done" : "playing"
     }
   end
 

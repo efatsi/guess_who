@@ -40,7 +40,7 @@ class AlexaResponse
   end
 
   def push_update
-    Pusher.trigger("game", "update", game.reload.as_json)
+    Pusher.trigger(PUSHER_GROUP, "update", game.reload.as_json)
   end
 
   def handle_answer

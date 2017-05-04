@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   def create
     game = Game.create
 
-    Pusher.trigger("game", "update", game.reload.as_json)
+    Pusher.trigger(PUSHER_GROUP, "update", game.reload.as_json)
 
     redirect_to game
   end
@@ -17,7 +17,7 @@ class GamesController < ApplicationController
     answer = game.current_question.answers.find_by(id: params[:answer])
 
     AnswerHandler.new(game, answer).process
-    Pusher.trigger("game", "update", game.reload.as_json)
+    Pusher.trigger(PUSHER_GROUP, "update", game.reload.as_json)
 
     redirect_to game
   end

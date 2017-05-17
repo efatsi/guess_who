@@ -30,7 +30,7 @@ puts "Seeding unique questions"
   "Heather Muety"     => "Does this person have two adorable J. Crew child models for sons?",
   "Henry Bley-Vroman" => "Does this person objectively have the best mustache at the company?",
   "Ian Brennan"       => "This is the new guy with the drones right?",
-  "Jackson Fox"       => "Does this person have a PHD, yet no one calls him doctor?",
+  "Jackson Fox"       => "Is this person the first to ever get hired twice at Viget?",
   "Jason Toth"        => "Does this person think Forrest Gump is highly overrated?",
   "Jeremy Frank"      => "Does this person love to watch and play Tennis?",
   "Jeremy Fields"     => "Would this person rather be biking right now?",

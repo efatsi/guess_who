@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get "/pics", to: "api#pics"
 
   post "/voice", to: "voice#handle"
+
+  match '*all', to: 'cors#info', via: :options
 end

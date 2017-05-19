@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   post "/games/:id/choose", to: "games#choose", as: :choose
 
   get "/info", to: "api#index"
-  get "/pics", to: "api#pics"
 
   post "/voice", to: "voice#handle"
 

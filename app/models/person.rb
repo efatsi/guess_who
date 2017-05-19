@@ -8,14 +8,6 @@ class Person < ApplicationRecord
 
   scope :by_name, -> { order(:name) }
 
-  def self.picture_json
-    all.map do |person|
-      {
-        url: person.url
-      }
-    end
-  end
-
   def to_s
     name
   end
